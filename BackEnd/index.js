@@ -1,18 +1,16 @@
-const express = require('express')
-const multer = require('multer')
-const cors = require('cors')
-const dotenv= require('dotenv')
-dotenv.config()
-
-const PORT = process.env.PORT
-
+const express= require('express')
 const app = express()
+const dotenv= require('dotenv')
+const DB_Connection= require('./config/connection.config.js')
+const routes = require('./routes/file.routes.js')
+dotenv.config()
+app.use(express.json())
+DB_Connection()
 
-app.get("/",(req,res)=>{
-    res.status(200).send("working")
-    
-})
+const port = process.env.PORT
 
-app.listen(PORT,()=>{
-    console.log(`Backend is running on port ${PORT}`)
+app.use("/api/file",routes)
+
+app.listen(port,()=>{
+    console.log("http://localhost:8000/")
 })

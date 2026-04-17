@@ -12,6 +12,7 @@ const [file, setFile] = useState(
   }
 )
 
+
 const handleAttachment =(e)=>{
   const files =e.target.files[0];
   if(files != null){
@@ -27,6 +28,7 @@ const handleAttachment =(e)=>{
 const handleInput=(e)=>{
   
   const input= e.target.value;
+  console.log(input === null)
   setFile((prev)=>({
     ...prev,
     input:input
@@ -35,6 +37,12 @@ const handleInput=(e)=>{
 
 const handleSubmit=(e)=>{
   e.preventDefault()
+  if(!(file.input.trim())){
+    alert("Please Enter the input")
+    return 
+  }
+  console.log("input clicked",file)
+
 }
 
   return (

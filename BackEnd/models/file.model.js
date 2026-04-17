@@ -1,21 +1,20 @@
 const moongoose= require('mongoose')
 
-const Schema = moongoose.Schema({
-    file:{
+const Schema = new moongoose.Schema({
+    filename:{
         type:String,
         require:true
     },
-    input:{
+    filepath:{
         type:String,
         require:true
-    }
-},
-{
-    timestamps:{
-        require:true
+    },
+    filehash:String,
+    createdAt:{
+        type:Date,
+        default: Date.now
     }
 }
 )
 
-const FileModel = moongoose.model("File",Schema)
-export default FileModel
+module.exports = moongoose.model("File",Schema)
