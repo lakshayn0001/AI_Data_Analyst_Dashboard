@@ -5,8 +5,11 @@ const query = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:'Session'
     },
-    question:String,
-    result:String,
+    question:{
+        type:String,
+        required: true
+    },
+    result:Object,
     createdAt:{
         type:Date,
         default: Date.now

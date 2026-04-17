@@ -1,5 +1,5 @@
 import { useState ,useEffect} from 'react'
-
+import axios from 'axios'
 
 
 
@@ -35,13 +35,26 @@ const handleInput=(e)=>{
   }))
 }
 
-const handleSubmit=(e)=>{
+const handleSubmit=async(e)=>{
   e.preventDefault()
   if(!(file.input.trim())){
     alert("Please Enter the input")
     return 
   }
-  console.log("input clicked",file)
+  const formData= new FormData();
+
+  formData.append("file",file.file)
+  formData.append("question",file.input)
+  try{
+    const res= await axios.post('http://localhost:8000/api/file/fileUpload',formData)
+    console.log(res)
+  }catch(error){
+    alert("Fail to send Data ",error)
+  }
+
+  //const res= axios.post('http://localhost:8000/api/file/fileUpload',{
+
+  //})
 
 }
 
