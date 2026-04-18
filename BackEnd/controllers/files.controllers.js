@@ -2,18 +2,15 @@ const files= require('../models/file.model.js')
 const Session= require('../models/session.model.js')
 const query= require('../models/query.model.js')
 const hasher = require('../utils/hashHelper.utils.js')
-
+const getQueryPlan = require('../services/ai.service.js')
 const analyzeData= async(req,res)=>{
     try{
         const file=req.file;
-        console.log(file)
-        console.log(req.body)
         const question= req.body.question;
 
-        if(! question){
-            console.log("Please Enter the question")
-            return
-        }
+             if (!question || !question.trim()) {
+  return res.status(400).json({ error: "Question is required" });
+}
 
         const filehash=hasher(file.path);
         let existingFIle = await files.findOne({filehash})
@@ -36,8 +33,9 @@ const analyzeData= async(req,res)=>{
                 fileId: newFile._id
             })
         }
+        const getAIplan= await getQueryPlan(question)
         const result = {
-            message:"Processing will happend",
+            message:getAIplan,
             question
         }
 
